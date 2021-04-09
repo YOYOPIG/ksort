@@ -90,7 +90,13 @@ static int __init xoro_init(void)
         a[i] = r;
     }
 
+    // Sorting time measurement
+    ktime_t time = ktime_get();
+
     sort_impl(a, TEST_LEN, sizeof(*a), cmpint, NULL);
+
+    time = ktime_sub(ktime_get(), time);
+    printk(KERN_INFO "ksort: Sorting took %lld (ns)", ktime_to_ns(time));
 
     err = -EINVAL;
     for (i = 0; i < TEST_LEN - 1; i++)

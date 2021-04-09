@@ -8,6 +8,11 @@
 
 #include "sort_impl.h"
 
+#define SORT_NAME int
+#define SORT_TYPE int
+#define SORT_CMP(x, y) ((x) - (y))
+#include "sort.h"
+
 #define DEVICE_NAME "xoroshiro128p"
 #define CLASS_NAME "xoro"
 
@@ -92,8 +97,8 @@ static int __init xoro_init(void)
 
     // Sorting time measurement
     ktime_t time = ktime_get();
-
-    sort_impl(a, TEST_LEN, sizeof(*a), cmpint, NULL);
+    int_tim_sort(a, TEST_LEN);
+    // sort_impl(a, TEST_LEN, sizeof(*a), cmpint, NULL);
 
     time = ktime_sub(ktime_get(), time);
     printk(KERN_INFO "ksort: Sorting took %lld (ns)", ktime_to_ns(time));
